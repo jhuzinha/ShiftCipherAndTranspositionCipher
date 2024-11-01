@@ -101,7 +101,7 @@ def frequency_analysis(text):
         data['frequency'] = data['count'] / total_chars
     return counts
 
-# Primeira função de transformação de text
+# Primeira função de decriptografia de texto pela frequência (pode ser usada essa ou a generate_permutations)
 def transform_text_by_frequency(text):
     counts = frequency_analysis(text)
 
@@ -117,6 +117,9 @@ def transform_text_by_frequency(text):
     }
     new_text = ''.join(char_map.get(char, char) for char in text.lower())
     return new_text
+
+
+
 
 def get_replacement_options(text):
     counts = frequency_analysis(text)
@@ -134,6 +137,7 @@ def get_replacement_options(text):
     return options_map
 
 # Função que imprime a com a primeira opçao de entrada e com a segunda depois.
+# Segunda função de decriptografia de texto pela frequência
 def generate_permutations(text):
     options_map = get_replacement_options(text)
     # Substitui usando a primeira opção
