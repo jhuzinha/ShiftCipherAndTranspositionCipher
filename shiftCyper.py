@@ -74,7 +74,7 @@ def shift_cypher(number_shift, text):
         crypting += letter_alphabet[number_alpha]
     return crypting
 
-def brute_force(text): #complexidade de n2, acredito que o que vai influenciar mais no tempo aqui é o tamanho do texto.
+def brute_force(text):
     amount_letters = 26
     for i in range(amount_letters):  # Iterando sobre o número de letras no alfabeto
         text_decrypt = ''
@@ -85,6 +85,7 @@ def brute_force(text): #complexidade de n2, acredito que o que vai influenciar m
             text_decrypt += letter_alphabet[number_text]
         print(f'Tamanho do deslocamento: {i}, {text_decrypt}')
 
+# Calcula a frequência do texto dado
 def frequency_analysis(text):
     counts = {}
     total_chars = 0
@@ -100,8 +101,8 @@ def frequency_analysis(text):
         data['frequency'] = data['count'] / total_chars
     return counts
 
+# Primeira função de transformação de text
 def transform_text_by_frequency(text):
-    # Calcula a frequência do texto dado
     counts = frequency_analysis(text)
 
     # Ordena as letras do texto por frequência em ordem decrescente
@@ -110,23 +111,16 @@ def transform_text_by_frequency(text):
     # Ordena o frequencyAnalysis por valor em ordem decrescente
     sorted_ref_freq = sorted(frequencyAnalysis.items(), key=lambda x: -x[1])
 
-    # Mapeia as letras do texto para as letras da referência
     char_map = {
         char: sorted_ref_freq[i][0]
         for i, (char, _) in enumerate(sorted_text_freq)
     }
-
-    # Reescreve o texto usando o mapeamento
     new_text = ''.join(char_map.get(char, char) for char in text.lower())
-
     return new_text
 
 def get_replacement_options(text):
     counts = frequency_analysis(text)
-    # Ordena o dicionário de frequência de referência em ordem decrescente
     sorted_ref_freq = sorted(frequencyAnalysis.items(), key=lambda x: -x[1])
-
-    # Ordena as letras do texto pela sua frequência no texto
     sorted_text_freq = sorted(counts.items(), key=lambda x: -x[1]['frequency'])
 
     options_map = {}
@@ -139,8 +133,9 @@ def get_replacement_options(text):
     generate_permutations(text, options_map)
     return options_map
 
-# Função que imprime todas as permutações possíveis do texto
-def generate_permutations(text, options_map):
+# Função que imprime a com a primeira opçao de entrada e com a segunda depois.
+def generate_permutations(text):
+    options_map = get_replacement_options(text)
     # Substitui usando a primeira opção
     first_option_text = ''.join(options_map.get(char, [char])[0] for char in text.lower())
     print("\nTexto com a primeira opção:")
